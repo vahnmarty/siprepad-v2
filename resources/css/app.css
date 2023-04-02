@@ -4,4 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.filament-forms-wizard-component ol li button{
+    /* @apply block; */
+}
+
+
+.filament-forms-wizard-component ol li button div{
+    /* @apply block mx-auto text-center; */
+}
 

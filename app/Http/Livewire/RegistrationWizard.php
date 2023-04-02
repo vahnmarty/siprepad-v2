@@ -8,6 +8,7 @@ use App\Enums\SuffixOption;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
+use App\Forms\Components\CustomWizard;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
@@ -30,22 +31,22 @@ class RegistrationWizard extends Component implements HasForms
     {
         
         return [
-            Wizard::make([
-                Step::make('Student Info')
+            CustomWizard::make([
+                Step::make('Student')
                     ->schema([$this->getStudentForm()]),
-                Step::make('Address Info')
+                Step::make('Address')
                     ->schema([
                         // ...
                     ]),
-                Step::make('Parent Info')
+                Step::make('Parent')
                     ->schema([
                         // ...
                     ]),
-                Step::make('Health Info')
+                Step::make('Health')
                     ->schema([
                         // ...
                     ]),
-                Step::make('Emergency Contact')
+                Step::make('Emergency')
                     ->schema([
                         // ...
                     ]),
@@ -57,7 +58,7 @@ class RegistrationWizard extends Component implements HasForms
                     ->schema([
                         // ...
                     ]),
-                Step::make('Course Placement')
+                Step::make('Course')
                     ->schema([
                         // ...
                     ]),
