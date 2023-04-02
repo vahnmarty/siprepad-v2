@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Registration;
+namespace App\Http\Livewire;
 
 use App\Models\Student;
 use Livewire\Component;
@@ -15,13 +15,15 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 
-class StudentInformation extends Component implements HasForms
+class RegistrationWizard extends Component implements HasForms
 {
     use InteractsWithForms;
+
+    public $birthdate;
     
     public function render()
     {
-        return view('livewire.registration.student-information');
+        return view('livewire.registration-wizard');
     }
 
     protected function getFormSchema(): array
@@ -44,6 +46,18 @@ class StudentInformation extends Component implements HasForms
                         // ...
                     ]),
                 Step::make('Emergency Contact')
+                    ->schema([
+                        // ...
+                    ]),
+                Step::make('Accommodations')
+                    ->schema([
+                        // ...
+                    ]),
+                Step::make('Magis Program')
+                    ->schema([
+                        // ...
+                    ]),
+                Step::make('Course Placement')
                     ->schema([
                         // ...
                     ]),

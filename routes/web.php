@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\RegistrationWizard;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Registration\StudentInformation;
 
@@ -30,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::group(['prefix' => 'registration', 'middleware' => 'auth'], function(){
 
-    Route::get('/', StudentInformation::class)->name('registration.student');
+    Route::get('/', RegistrationWizard::class)->name('registration-wizard');
 });
 
 require __DIR__.'/auth.php';
