@@ -20,11 +20,20 @@ class RegistrationWizard extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $birthdate;
-    
+    # Student
+    public $s1_first_name, $s1_middle_name, $s1_last_name, $s1_suffix, $s1_birthdate, $s1_preferred_first_name;
+    public $s2_first_name, $s2_middle_name, $s2_last_name, $s2_suffix, $s2_birthdate, $s2_preferred_first_name;
+    public $s3_first_name, $s3_middle_name, $s3_last_name, $s3_suffix, $s3_birthdate, $s3_preferred_first_name;
+
+
     public function render()
     {
         return view('livewire.registration-wizard');
+    }
+
+    public function mount()
+    {
+        
     }
 
     protected function getFormSchema(): array
@@ -76,12 +85,12 @@ class RegistrationWizard extends Component implements HasForms
                 ->icon('heroicon-s-user') 
                 ->columns(2)
                 ->schema([
-                    TextInput::make('first_name')->required(),
-                    TextInput::make('middle_name'),
-                    TextInput::make('last_name')->required(),
-                    Select::make('suffix')->options(SuffixOption::asArray()),
-                    TextInput::make('preferred_first_name'),
-                    DatePicker::make('birthdate')
+                    TextInput::make("s{$s}_first_name")->required(),
+                    TextInput::make("s{$s}_middle_name"),
+                    TextInput::make("s{$s}_last_name")->required(),
+                    Select::make("s{$s}_suffix")->options(SuffixOption::asArray()),
+                    TextInput::make("s{$s}_preferred_first_name"),
+                    DatePicker::make("s{$s}_birthdate")->required()
                 ]);
 
             $tabs[] = $tab;
