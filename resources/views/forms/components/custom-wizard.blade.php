@@ -104,7 +104,7 @@
         {!! $getLabel() ? 'aria-label="' . $getLabel() . '"' : null !!}
         role="list"
         @class([
-            'justify-center shadow-sm bg-white rounded-xl overflow-hidden divide-y md:flex md:divide-y-0',
+            'justify-center bg-white rounded-xl overflow-hidden divide-y md:flex md:divide-y-0',
             'dark:bg-gray-800 dark:border-gray-700 dark:divide-gray-700' => config('forms.dark_mode'),
         ])
     >

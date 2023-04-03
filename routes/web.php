@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::group(['prefix' => 'registration', 'middleware' => 'auth'], function(){
 
     Route::get('/', RegistrationWizard::class)->name('registration-wizard');
+    Route::get('/student', StudentInformation::class);
 });
 
 require __DIR__.'/auth.php';

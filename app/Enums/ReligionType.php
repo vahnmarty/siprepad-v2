@@ -9,8 +9,7 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class GenderType extends Enum
+final class ReligionType extends Enum
 {
-    const Male = 'male';
-    const Female = 'female';
+    const Catholic = 'Catholic';
 }

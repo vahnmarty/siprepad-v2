@@ -2,10 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use Auth;
+use Closure;
+use App\Models\School;
+use App\Enums\RaceType;
 use App\Models\Student;
 use Livewire\Component;
+use App\Enums\ShirtSize;
+use App\Enums\GenderType;
+use App\Enums\ReligionType;
 use App\Enums\SuffixOption;
+use App\Enums\PerformingArtsType;
 use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
 use App\Forms\Components\CustomWizard;
@@ -15,16 +25,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Http\Livewire\Registration\Traits\StudentInformationTrait;
 
 class RegistrationWizard extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    # Student
-    public $s1_first_name, $s1_middle_name, $s1_last_name, $s1_suffix, $s1_birthdate, $s1_preferred_first_name;
-    public $s2_first_name, $s2_middle_name, $s2_last_name, $s2_suffix, $s2_birthdate, $s2_preferred_first_name;
-    public $s3_first_name, $s3_middle_name, $s3_last_name, $s3_suffix, $s3_birthdate, $s3_preferred_first_name;
+    use StudentInformationTrait;
 
+    const MAX=3;
 
     public function render()
     {
@@ -33,7 +42,7 @@ class RegistrationWizard extends Component implements HasForms
 
     public function mount()
     {
-        
+        $this->mountStudents();
     }
 
     protected function getFormSchema(): array
@@ -42,7 +51,10 @@ class RegistrationWizard extends Component implements HasForms
         return [
             CustomWizard::make([
                 Step::make('Student')
-                    ->schema([$this->getStudentForm()]),
+                    ->schema([$this->getStudentForm()])
+                    ->afterValidation(function(){
+                        $this->saveStudents();
+                    }),
                 Step::make('Address')
                     ->schema([
                         // ...
@@ -75,27 +87,5 @@ class RegistrationWizard extends Component implements HasForms
         ];
     }
 
-    public function getStudentForm()
-    {
-        $tabs = [];
-
-        foreach(range(1,3) as $s)
-        {
-            $tab = Tab::make('Student ' . $s)
-                ->icon('heroicon-s-user') 
-                ->columns(2)
-                ->schema([
-                    TextInput::make("s{$s}_first_name")->required(),
-                    TextInput::make("s{$s}_middle_name"),
-                    TextInput::make("s{$s}_last_name")->required(),
-                    Select::make("s{$s}_suffix")->options(SuffixOption::asArray()),
-                    TextInput::make("s{$s}_preferred_first_name"),
-                    DatePicker::make("s{$s}_birthdate")->required()
-                ]);
-
-            $tabs[] = $tab;
-        }
-
-        return Tabs::make('Student Heading')->tabs($tabs);
-    }
+    
 }

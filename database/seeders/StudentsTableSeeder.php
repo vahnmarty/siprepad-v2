@@ -57,7 +57,7 @@ class StudentsTableSeeder extends Seeder
                 $student->race = RaceType::getRandomValue();
                 $student->ethnicity = EthnicType::getRandomValue();
                 $student->current_school = "Grange Middle School";
-                $student->other_high_school1 = "Balboa High School";
+                //$student->other_school = "Balboa High School";
                 $student->shirt_size = ShirtSize::getRandomValue();
                 $student->performing_arts = 1;
                 $student->performing_arts_type = PerformingArtsType::getRandomValue();

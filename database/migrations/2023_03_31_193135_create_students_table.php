@@ -30,13 +30,10 @@ return new class extends Migration
 
 
             $table->string('current_school');
-            $table->string('other_high_school1')->nullable();
-            $table->string('other_high_school2')->nullable();
-            $table->string('other_high_school3')->nullable();
-            $table->string('other_high_school4')->nullable();
+            $table->string('other_school')->nullable();
 
             $table->string('shirt_size')->nullable();
-            $table->string('performing_arts')->nullable();
+            $table->boolean('performing_arts')->nullable();
             $table->string('performing_arts_type')->nullable();
             $table->string('performing_arts_other')->nullable();
 

@@ -25,29 +25,14 @@ class StudentInformation extends Component implements HasForms
     }
 
     protected function getFormSchema(): array
-    {
-        
+    {   
         return [
-            Wizard::make([
-                Step::make('Student Info')
-                    ->schema([$this->getStudentForm()]),
-                Step::make('Address Info')
-                    ->schema([
-                        // ...
-                    ]),
-                Step::make('Parent Info')
-                    ->schema([
-                        // ...
-                    ]),
-                Step::make('Health Info')
-                    ->schema([
-                        // ...
-                    ]),
-                Step::make('Emergency Contact')
-                    ->schema([
-                        // ...
-                    ]),
-            ])
+            TextInput::make('first_name')->required(),
+            TextInput::make('middle_name'),
+            TextInput::make('last_name')->required(),
+            Select::make('suffix')->options(SuffixOption::asArray()),
+            TextInput::make('preferred_first_name'),
+            DatePicker::make('birthdate')
         ];
     }
 
@@ -61,12 +46,7 @@ class StudentInformation extends Component implements HasForms
                 ->icon('heroicon-s-user') 
                 ->columns(2)
                 ->schema([
-                    TextInput::make('first_name')->required(),
-                    TextInput::make('middle_name'),
-                    TextInput::make('last_name')->required(),
-                    Select::make('suffix')->options(SuffixOption::asArray()),
-                    TextInput::make('preferred_first_name'),
-                    DatePicker::make('birthdate')
+                   
                 ]);
 
             $tabs[] = $tab;
