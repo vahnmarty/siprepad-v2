@@ -7,6 +7,7 @@ use App\Enums\RaceType;
 use App\Models\Student;
 use App\Enums\ShirtSize;
 use App\Enums\EthnicType;
+use App\Enums\ReligionType;
 use Illuminate\Database\Seeder;
 use App\Enums\PerformingArtsType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -54,12 +55,13 @@ class StudentsTableSeeder extends Seeder
                 $student->gender = rand(0,1);
                 $student->personal_email = fake()->freeEmail();
                 $student->mobile_phone = fake()->phoneNumber();
+                $student->religion = ReligionType::getRandomValue();
                 $student->race = RaceType::getRandomValue();
                 $student->ethnicity = EthnicType::getRandomValue();
                 $student->current_school = "Grange Middle School";
                 //$student->other_school = "Balboa High School";
                 $student->shirt_size = ShirtSize::getRandomValue();
-                $student->performing_arts = 1;
+                $student->is_performing_arts = 1;
                 $student->performing_arts_type = PerformingArtsType::getRandomValue();
                 $student->save();
             }

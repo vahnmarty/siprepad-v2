@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('personal_email');
             $table->string('mobile_phone');
+            $table->string('religion')->nullable();
             $table->string('race')->nullable();
             $table->string('ethnicity')->nullable();
 
@@ -33,7 +34,7 @@ return new class extends Migration
             $table->string('other_school')->nullable();
 
             $table->string('shirt_size')->nullable();
-            $table->boolean('performing_arts')->nullable();
+            $table->boolean('is_performing_arts')->nullable();
             $table->string('performing_arts_type')->nullable();
             $table->string('performing_arts_other')->nullable();
 
