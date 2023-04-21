@@ -25,6 +25,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Http\Livewire\Registration\Traits\EmergencyContactTrait;
 use App\Http\Livewire\Registration\Traits\HealthInformationTrait;
 use App\Http\Livewire\Registration\Traits\ParentInformationTrait;
 use App\Http\Livewire\Registration\Traits\AddressInformationTrait;
@@ -37,7 +38,8 @@ class RegistrationWizard extends Component implements HasForms
     use StudentInformationTrait, 
         AddressInformationTrait,
         ParentInformationTrait,
-        HealthInformationTrait;
+        HealthInformationTrait,
+        EmergencyContactTrait;
 
     const MAX=3;
 
@@ -51,6 +53,7 @@ class RegistrationWizard extends Component implements HasForms
         $this->mountStudents();
         $this->mountAddress();
         $this->mountParents();
+        $this->mountHealth();
     }
 
     protected function getFormSchema(): array
@@ -79,9 +82,10 @@ class RegistrationWizard extends Component implements HasForms
                         $this->saveHealth();
                     }),
                 Step::make('Emergency')
-                    ->schema([
-                        // ...
-                    ]),
+                    ->schema($this->getEmergencyContactForm())
+                    ->afterValidation(function(){
+                        $this->saveEmergencyContactForm();
+                    }),
                 Step::make('Accommodations')
                     ->schema([
                         // ...
@@ -94,7 +98,7 @@ class RegistrationWizard extends Component implements HasForms
                     ->schema([
                         // ...
                     ]),
-            ])->startOnStep(4)
+            ])->startOnStep(5)
         ];
     }
 

@@ -60,8 +60,13 @@ class User extends Authenticatable
         return $this->hasMany(Parents::class);
     }
 
-    public function healths()
+    public function health()
     {
         return $this->hasOne(Health::class);
+    }
+
+    public function emergency_contact()
+    {
+        return $this->hasOne(EmergencyContact::class);
     }
 }
