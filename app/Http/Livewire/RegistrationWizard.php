@@ -13,6 +13,7 @@ use App\Enums\GenderType;
 use App\Enums\ReligionType;
 use App\Enums\SuffixOption;
 use App\Enums\PerformingArtsType;
+use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Hidden;
@@ -27,6 +28,7 @@ use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use App\Http\Livewire\Registration\Traits\MagisProgramTrait;
 use App\Http\Livewire\Registration\Traits\AccommodationTrait;
+use App\Http\Livewire\Registration\Traits\CoursePlacementTrait;
 use App\Http\Livewire\Registration\Traits\EmergencyContactTrait;
 use App\Http\Livewire\Registration\Traits\HealthInformationTrait;
 use App\Http\Livewire\Registration\Traits\ParentInformationTrait;
@@ -43,7 +45,8 @@ class RegistrationWizard extends Component implements HasForms
         HealthInformationTrait,
         EmergencyContactTrait,
         AccommodationTrait,
-        MagisProgramTrait;
+        MagisProgramTrait,
+        CoursePlacementTrait;
 
     const MAX=3;
 
@@ -57,9 +60,11 @@ class RegistrationWizard extends Component implements HasForms
         $this->mountStudents();
         $this->mountAddress();
         $this->mountParents();
+        $this->mountEmergency();
         $this->mountHealth();
         $this->mountAccommodation();
         $this->mountMagisProgram();
+        $this->mountCoursePlacement();
     }
 
     protected function getFormSchema(): array
@@ -103,10 +108,11 @@ class RegistrationWizard extends Component implements HasForms
                         $this->saveMagisProgram();
                     }),
                 Step::make('Course')
-                    ->schema([
-                        // ...
-                    ]),
-            ])->startOnStep(7)
+                    ->schema([$this->getCoursePlacementForm()])
+                    ->afterValidation(function(){
+                        $this->saveCoursePlacement();
+                    }),
+            ])->startOnStep(8)->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
         ];
     }
 

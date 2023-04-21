@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(MagisProgram::class);
     }
+
+    public function coursePlacements()
+    {
+        return $this->hasMany(CoursePlacement::class);
+    }
 }

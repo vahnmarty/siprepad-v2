@@ -30,6 +30,18 @@ trait MagisProgramTrait{
     public function mountMagisProgram()
     {
         $user = Auth::user();
+
+        $this->is_first_generation = $user->magisProgram?->is_first_generation;
+
+        foreach($user->students as  $i => $student)
+        {
+            $s = $i+1;
+            if($student->magisProgramItem)
+            {
+                $this->{"s{$s}_interested"} = $student->magisProgramItem->is_interested;
+            }
+        }
+
     }
 
     public function getMagisProgramForm()

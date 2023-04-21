@@ -27,6 +27,18 @@ trait AccommodationTrait{
     public function mountAccommodation()
     {
         $user = Auth::user();
+        $students = $user->students;
+
+        foreach($students as $i =>  $student)
+        {
+            $s = $i+1;
+
+            if($student->accommodation)
+            {
+                $this->{"s{$s}_receive_formal"} = $student->accommodation->receive_formal;
+                $this->{"s{$s}_receive_informal"} = $student->accommodation->receive_informal;
+            }
+        }
     }
 
     public function getAccommodationForm()
