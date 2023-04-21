@@ -5,12 +5,14 @@ namespace App\Http\Livewire\Registration\Traits;
 use Auth;
 use Closure;
 use App\Models\Address;
+use App\Enums\AddressType;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TextInput\Mask;
 
 trait AddressInformationTrait{
 
-    public $street_address, $city, $state, $zip_code, $phone;
+    public $address_type, $street_address, $city, $state, $zip_code, $phone;
 
     public function mountAddress()
     {
@@ -25,11 +27,14 @@ trait AddressInformationTrait{
             $this->phone = $address->phone;
         }
 
+        $this->address_type = AddressType::Primary;
+
     }
 
     public function getAddressForm()
     {
         return [
+            Hidden::make('address_type'),
             TextInput::make('street_address')->columnSpan('full')->required(),
             TextInput::make('city')->columnSpan('full')->required(),
             TextInput::make('state')->columnSpan('full')->required(),
@@ -49,7 +54,8 @@ trait AddressInformationTrait{
         Address::updateOrCreate([
             'user_id' => $user->id,
         ],
-        [
+        [   
+            'address_type' => $this->address_type,
             'street_address' => $this->street_address,
             'city' => $this->city,
             'state' => $this->state,

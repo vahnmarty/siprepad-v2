@@ -90,7 +90,7 @@ class RegistrationWizard extends Component implements HasForms
                     ->schema([
                         // ...
                     ]),
-            ])
+            ])->startOnStep(3)
         ];
     }
 

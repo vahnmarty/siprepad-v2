@@ -13,5 +13,6 @@ final class AddressType extends Enum
 {
     const Primary = "Primary";
     const Secondary = "Secondary";
-    const Billing = "Billing";
+    const OtherAddress1 = "Other Address 1";
+    const OtherAddress2 = "Other Address 2";
 }
