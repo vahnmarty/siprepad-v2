@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Parents::class);
     }
+
+    public function healths()
+    {
+        return $this->hasOne(Health::class);
+    }
 }

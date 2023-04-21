@@ -75,11 +75,11 @@ trait ParentInformationTrait{
                 ->icon('heroicon-s-user') 
                 ->columns(2)
                 ->schema([
-                    Hidden::make("s{$p}_id"),
-                    Toggle::make("s{$p}_enable")->label("Enable Parent {$p}?")->reactive(),
+                    Hidden::make("p{$p}_id"),
+                    Toggle::make("p{$p}_enable")->label("Enable Parent {$p}?")->reactive(),
                     Section::make("Parent {$p}")
                         ->columns(2)
-                        ->visible(fn(Closure $get) => $get("s{$p}_enable") === true )
+                        ->visible(fn(Closure $get) => $get("p{$p}_enable") === true )
                         ->schema([
                             Select::make("p{$p}_relationship")
                                 ->label('Relationship')
@@ -154,12 +154,12 @@ trait ParentInformationTrait{
             {
                 $data = [];
 
+
                 foreach($this->single_columns as $column)
                 {
                     $field = "p{$p}_" . $column;
                     $data[$column] = $this->$field;
                 }
-
 
                 $parent_id = "p{$p}_id";
 
@@ -172,5 +172,6 @@ trait ParentInformationTrait{
             }
             
         }
+
     }
 }

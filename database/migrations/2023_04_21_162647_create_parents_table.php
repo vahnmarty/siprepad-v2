@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('employer');
             $table->string('job_title');
             $table->string('work_phone')->nullable();
-            $table->longtext('high_school_attended')->nullable();
+            $table->string('high_school_attended', 5000)->nullable();
             $table->string('living_situation');
             $table->timestamps();
         });
