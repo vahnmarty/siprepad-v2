@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Registration\Traits;
 
 use Auth;
 use Closure;
+use App\Models\Address;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TextInput\Mask;
 
@@ -43,6 +44,17 @@ trait AddressInformationTrait{
 
     public function saveAddress()
     {
+        $user = Auth::user();
 
+        Address::updateOrCreate([
+            'user_id' => $user->id,
+        ],
+        [
+            'street_address' => $this->street_address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'zip_code' => $this->zip_code,
+            'phone' => $this->phone,
+        ]);
     }
 }
