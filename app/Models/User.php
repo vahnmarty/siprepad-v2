@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\MagisProgram;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -73,5 +74,10 @@ class User extends Authenticatable
     public function accommodations()
     {
         return $this->hasMany(Accommodation::class);
+    }
+
+    public function magisProgram()
+    {
+        return $this->hasOne(MagisProgram::class);
     }
 }

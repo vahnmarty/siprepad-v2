@@ -15,4 +15,9 @@ class Student extends Model
     {
         return $this->hasOne(Accommodation::class);
     }
+
+    public function magisProgramItem()
+    {
+        return $this->hasOne(MagisProgramItem::class);
+    }
 }

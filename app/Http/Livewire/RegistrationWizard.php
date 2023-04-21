@@ -25,6 +25,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Http\Livewire\Registration\Traits\MagisProgramTrait;
 use App\Http\Livewire\Registration\Traits\AccommodationTrait;
 use App\Http\Livewire\Registration\Traits\EmergencyContactTrait;
 use App\Http\Livewire\Registration\Traits\HealthInformationTrait;
@@ -41,7 +42,8 @@ class RegistrationWizard extends Component implements HasForms
         ParentInformationTrait,
         HealthInformationTrait,
         EmergencyContactTrait,
-        AccommodationTrait;
+        AccommodationTrait,
+        MagisProgramTrait;
 
     const MAX=3;
 
@@ -57,6 +59,7 @@ class RegistrationWizard extends Component implements HasForms
         $this->mountParents();
         $this->mountHealth();
         $this->mountAccommodation();
+        $this->mountMagisProgram();
     }
 
     protected function getFormSchema(): array
@@ -95,14 +98,15 @@ class RegistrationWizard extends Component implements HasForms
                         $this->saveAccommodations();
                     }),
                 Step::make('Magis Program')
-                    ->schema([
-                        // ...
-                    ]),
+                    ->schema($this->getMagisProgramForm())
+                    ->afterValidation(function(){
+                        $this->saveMagisProgram();
+                    }),
                 Step::make('Course')
                     ->schema([
                         // ...
                     ]),
-            ])->startOnStep(6)
+            ])->startOnStep(7)
         ];
     }
 
