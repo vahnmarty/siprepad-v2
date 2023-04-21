@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class RaceType extends Enum
 {
-    const Asian = 0;
-    const Black = 1;
-    const White = 2;
+    const Asian = "Asian";
+    const Black = "Black";
+    const White = "White";
 }

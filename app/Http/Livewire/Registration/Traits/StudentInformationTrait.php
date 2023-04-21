@@ -28,12 +28,16 @@ use Filament\Forms\Components\Wizard\Step;
 
 trait StudentInformationTrait{
 
-    protected $student_columns = [
+    private $student_columns = [
         'first_name', 'middle_name', 'last_name', 'suffix', 'preferred_first_name', 
-        'birthdate', 'gender', 'personal_email', 'mobile_phone', 'race', 'ethnicity', 'religion',
+        'birthdate', 'gender', 'personal_email', 'mobile_phone', 'ethnicity', 'religion',
         'current_school', 'other_school', 'shirt_size', 
-        'is_performing_arts', 'performing_arts_type', 'performing_arts_other'
-    ]; 
+        'is_performing_arts', 'performing_arts_other'
+    ];
+    
+    private $multiple_columns = [
+        'race', 'performing_arts_type'
+    ];  
 
     public $s1_enable = true, $s1_id,
         $s1_first_name, $s1_middle_name, $s1_last_name, $s1_suffix, $s1_preferred_first_name,
@@ -70,13 +74,20 @@ trait StudentInformationTrait{
                 
                 # Mount student->id
                 $fieldId = "s{$s}_id";
-                $this->fieldId = $student->id;
+                $this->$fieldId = $student->id;
 
                 # Data fill
                 foreach($this->student_columns as $column)
                 {
                     $field = "s{$s}_" . $column;
                     $this->$field = $student->$column;
+                }
+
+                foreach($this->multiple_columns as $column)
+                {
+                    $field = "s{$s}_" . $column;
+                    $this->$field = explode(',', $student->$column);
+                    
                 }
             }
         }
@@ -99,7 +110,7 @@ trait StudentInformationTrait{
                 ->schema([
                     Hidden::make("s{$s}_id"),
                     Toggle::make("s{$s}_enable")->label("Enable Student {$s}?")->reactive(),
-                    Section::make("Student S{$s}")
+                    Section::make("Student {$s}")
                         ->visible(fn(Closure $get) => $get("s{$s}_enable") === true )
                         ->schema([
                             TextInput::make("s{$s}_first_name")
@@ -173,19 +184,41 @@ trait StudentInformationTrait{
     public function saveStudents()
     {
         $user = Auth::user();
-        $columns = $this->student_columns;
 
         foreach(range(1, self::MAX) as $s)
         {
-            $data = [];
 
-            foreach($columns as $column)
+            $enable = "s{$s}_enable";
+
+            if($this->$enable)
             {
-                $field = "s{$s}_" . $column;
-                $data[$column] = $this->$field;
-            }
+                $data = [];
 
-            $user->students()->create($data);
+                foreach($this->student_columns as $column)
+                {
+                    $field = "s{$s}_" . $column;
+                    $data[$column] = $this->$field;
+                }
+
+                foreach($this->multiple_columns as $column)
+                {
+                    $field = "s{$s}_" . $column;
+                    if(is_array($this->$field)){
+                        $data[$column] = implode(',', $this->$field);
+                    }
+                    
+                }
+
+                $student_id = "s{$s}_id";
+
+                if($this->$student_id){
+                    $student = Student::find($this->$student_id);
+                    $student->update($data);
+                }else{
+                    $user->students()->create($data);
+                }
+            }
+            
         }
     }
 

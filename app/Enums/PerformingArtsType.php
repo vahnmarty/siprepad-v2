@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class PerformingArtsType extends Enum
 {
-    const Choir = 0;
-    const JazzBand = 1;
-    const Dance = 2;
+    const Choir = "Choir";
+    const JazzBand = "Jazz Band";
+    const Dance = "Dance";
 }
