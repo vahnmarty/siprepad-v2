@@ -10,4 +10,9 @@ class Student extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function accommodation()
+    {
+        return $this->hasOne(Accommodation::class);
+    }
 }

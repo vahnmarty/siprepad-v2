@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('accommodations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('student_id');
+            $table->boolean('receive_formal');
+            $table->boolean('receive_informal');
             $table->timestamps();
         });
     }
