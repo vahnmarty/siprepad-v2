@@ -122,7 +122,7 @@
                 >
 
                 <div
-                    x-bind:class="getStepIndex(step) === {{ $loop->index }} 
+                    x-bind:class="getStepIndex(step) >= {{ $loop->index }} 
                         ? 'bg-primary-500'
                         : 'bg-gray-200'
                     "

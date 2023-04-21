@@ -25,13 +25,14 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Http\Livewire\Registration\Traits\AddressInformationTrait;
 use App\Http\Livewire\Registration\Traits\StudentInformationTrait;
 
 class RegistrationWizard extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    use StudentInformationTrait;
+    use StudentInformationTrait, AddressInformationTrait;
 
     const MAX=3;
 
@@ -56,9 +57,10 @@ class RegistrationWizard extends Component implements HasForms
                         $this->saveStudents();
                     }),
                 Step::make('Address')
-                    ->schema([
-                        // ...
-                    ]),
+                    ->schema($this->getAddressForm())
+                    ->afterValidation(function(){
+                        $this->saveAddress();
+                    }),
                 Step::make('Parent')
                     ->schema([
                         // ...
