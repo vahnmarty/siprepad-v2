@@ -48,7 +48,7 @@ class RegistrationWizard extends Component implements HasForms
         MagisProgramTrait,
         CoursePlacementTrait;
 
-    const MAX=3;
+    public $last_step = 1;
 
     public function render()
     {
@@ -57,14 +57,42 @@ class RegistrationWizard extends Component implements HasForms
 
     public function mount()
     {
+        # Traits
         $this->mountStudents();
         $this->mountAddress();
         $this->mountParents();
-        $this->mountEmergency();
         $this->mountHealth();
+        $this->mountEmergency();
         $this->mountAccommodation();
         $this->mountMagisProgram();
         $this->mountCoursePlacement();
+
+
+        # Functions
+        $this->getLastStep();
+    }
+
+    public function getLastStep()
+    {
+        $user = Auth::user();
+
+        if($user->students()->count() <= 0){
+            $this->last_step = 1;
+        }elseif($user->address()->count() <= 0){
+            $this->last_step = 2;
+        }elseif($user->parents()->count() <= 0){
+            $this->last_step = 3;
+        }elseif($user->health()->count() <= 0){
+            $this->last_step = 4;
+        }elseif($user->emergency_contact()->count() <= 0){
+            $this->last_step = 5;
+        }elseif($user->accommodations()->count() <= 0){
+            $this->last_step = 6;
+        }elseif($user->magisProgram()->count() <= 0){
+            $this->last_step = 7;
+        }elseif($user->coursePlacements()->count() <= 0){
+            $this->last_step = 8;
+        }
     }
 
     protected function getFormSchema(): array
@@ -112,7 +140,8 @@ class RegistrationWizard extends Component implements HasForms
                     ->afterValidation(function(){
                         $this->saveCoursePlacement();
                     }),
-            ])->startOnStep(8)->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
+            ])->startOnStep($this->last_step)
+                ->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
         ];
     }
 

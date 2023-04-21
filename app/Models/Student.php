@@ -20,4 +20,9 @@ class Student extends Model
     {
         return $this->hasOne(MagisProgramItem::class);
     }
+
+    public function coursePlacement()
+    {
+        return $this->hasOne(CoursePlacement::class);
+    }
 }

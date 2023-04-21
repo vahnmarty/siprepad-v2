@@ -28,6 +28,7 @@ use Filament\Forms\Components\Wizard\Step;
 
 trait StudentInformationTrait{
 
+    const MAX = 3;
     private $student_columns = [
         'first_name', 'middle_name', 'last_name', 'suffix', 'preferred_first_name', 
         'birthdate', 'gender', 'personal_email', 'mobile_phone', 'ethnicity', 'religion',
