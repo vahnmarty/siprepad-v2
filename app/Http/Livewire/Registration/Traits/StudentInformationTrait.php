@@ -28,7 +28,7 @@ use Filament\Forms\Components\Wizard\Step;
 
 trait StudentInformationTrait{
 
-    const MAX = 3;
+    private $max = 3;
     private $student_columns = [
         'first_name', 'middle_name', 'last_name', 'suffix', 'preferred_first_name', 
         'birthdate', 'gender', 'personal_email', 'mobile_phone', 'ethnicity', 'religion',
@@ -62,7 +62,7 @@ trait StudentInformationTrait{
     {
         $students = Auth::user()->students;
 
-        foreach(range(1,self::MAX) as $s)
+        foreach(range(1,$this->max) as $s)
         {
             if(!empty($students[$s-1]))
             {
@@ -186,7 +186,7 @@ trait StudentInformationTrait{
     {
         $user = Auth::user();
 
-        foreach(range(1, self::MAX) as $s)
+        foreach(range(1, $this->max) as $s)
         {
 
             $enable = "s{$s}_enable";
