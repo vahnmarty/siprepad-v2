@@ -140,9 +140,17 @@ class RegistrationWizard extends Component implements HasForms
                     ->afterValidation(function(){
                         $this->saveCoursePlacement();
                     }),
-            ])->startOnStep($this->last_step)
-                ->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
+            ])
+            ->startOnStep(8)
+            ->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
         ];
+    }
+
+    public function submit()
+    {
+        $data = $this->form->getState();
+
+        $this->saveCoursePlacement();
     }
 
     

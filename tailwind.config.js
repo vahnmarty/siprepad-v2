@@ -10,6 +10,10 @@ module.exports = {
         './vendor/filament/**/*.blade.php', 
     ],
 
+    safelist: [
+        'bg-yellow',
+    ],
+
     theme: {
         extend: {
             colors: { 

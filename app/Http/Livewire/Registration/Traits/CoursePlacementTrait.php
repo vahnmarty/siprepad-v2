@@ -33,6 +33,11 @@ trait CoursePlacementTrait{
 
     public $s3_english_placement, $s3_math_placement, $s3_reserve_math_challenge, $s3_language1, $s3_language2, $s3_language3, $s3_language4, $s3_reserve_language_challenge, $s3_language_challenge, $s3_language_levels;
 
+    private $placement_columns = [    'english_placement',    'math_placement',    'reserve_math_challenge',    'language1',    'language2',    'language3',    'language4',    'reserve_language_challenge',    'language_challenge'];
+
+    private $placement_multiple_columns = ['language_levels'];
+
+
 
     public function mountCoursePlacement()
     {
@@ -41,6 +46,19 @@ trait CoursePlacementTrait{
         foreach($user->students as $i => $student)
         {
             $s = $i+1;
+
+            foreach($this->placement_columns as $column)
+            {
+                $this->{"s{$s}_" . $column} = $student->coursePlacement?->$column;
+            }
+
+            foreach($this->placement_multiple_columns as $column)
+            {
+                $field = "s{$s}_" . $column;
+                $this->$field = explode(',', $student->coursePlacement?->$column);
+                
+            }
+            
         }
     }
 
@@ -58,24 +76,35 @@ trait CoursePlacementTrait{
                 ->schema([
                     Placeholder::make('')
                         ->content(new HtmlString('<h3 class="font-bold">Student '. $s .' - '. $student->first_name .'</h3>')),
-                    Placeholder::make('English Placement')
-                        ->content(new HtmlString('
-                            <p class="mt-4">You have been placed in:<strong>{Language Here}</strong></p>
-                            <div class="mt-4">
-                                <strong>NOTE</strong>:  Any interested freshman students will have an opportunity to apply for Honors English in the spring semester of their freshman year for the following school year (sophomore year).
-                            </div>
-                        ')),
-                    Placeholder::make('Math Placement')
-                        ->content(new HtmlString('
-                            <p class="mt-4">You have been placed in:<strong>{Math Here}</strong></p>
-                            <div class="mt-4">
-                                If you want to challenge your math placement, you are required to take the Challenge Test on April 22, 2022..
-                            </div>
-                        ')),
-                    Radio::make("s{$s}_reserve_math_challenge")
-                        ->label('Do you want to make a reservation to take the Math Challenge Test on April 22,2023?')
-                        ->boolean()
-                        ->required(),
+                    Fieldset::make('English Placement')
+                        ->columns(1)
+                        ->schema([
+                            Placeholder::make('')
+                            ->content(new HtmlString('
+                                <p>You have been placed in:<strong>{Language Here}</strong></p>
+                                <div class="p-1 mt-4 bg-warning-2">
+                                    <strong>NOTE</strong>:  Any interested freshman students will have an opportunity to apply for Honors English in the spring semester of their freshman year for the following school year (sophomore year).
+                                </div>
+                            ')),
+                    ]),
+
+                    Fieldset::make('Math Placement')
+                        ->columns(1)
+                        ->schema([
+                            Placeholder::make('')
+                                ->content(new HtmlString('
+                                <p>You have been placed in:<strong>{Math Here}</strong></p>
+                                <div class="mt-4">
+                                    If you want to challenge your math placement, you are required to take the Challenge Test on April 22, 2022..
+                                </div>
+                            ')),
+
+                            Radio::make("s{$s}_reserve_math_challenge")
+                                ->label('Do you want to make a reservation to take the Math Challenge Test on April 22,2023?')
+                                ->boolean()
+                                ->required(),
+                    ]),
+                    
                     Fieldset::make('Language Selection')
                         ->schema([
                             Placeholder::make('')
@@ -97,18 +126,20 @@ trait CoursePlacementTrait{
                                 ->inlineLabel(),
                             Placeholder::make('')
                                 ->columnSpan('full')
-                                ->content(new HtmlString('<p>To place in a more advanced section of your language choice than beginning level, you are required to take a Language Placement Test on April 22, 2022.</p>')),
+                                ->content(new HtmlString('<p class="p-1 bg-warning-2"><strong>NOTE:</strong>To place in a more advanced section of your language choice than beginning level, you are required to take a Language Placement Test on April 22, 2022.</p>')),
                             Radio::make("s{$s}_reserve_language_challenge")
                                 ->label('Do you want to make a reservation to take the Language Placement Test on April 22,2023')
                                 ->boolean()
                                 ->columnSpan('full')
                                 ->required(),
                             Select::make("s{$s}_language_challenge")
+                                ->label('What Language?')
                                 ->options(LanguageOption::asSelectArray())
-                                ->columnSpan('full'),
+                                ->columnSpan('full')
+                                ->required(),
                             CheckboxList::make("s{$s}_language_levels")
                                 ->label('Check ALL that apply to your number 1 ranked language choice')
-                                ->options(LanguageLevelOption::asArray())
+                                ->options(LanguageLevelOption::asSameArray())
                         ])
                     
                 ]);
@@ -127,20 +158,31 @@ trait CoursePlacementTrait{
         foreach($students as $i => $student)
         {
             $s = $i+1;
+            $data = [];
 
-            $receive_formal_field = "s{$s}_receive_formal";
-            $receive_informal_field = "s{$s}_receive_informal";
+            foreach($this->placement_columns as $column)
+            {
+                $field = "s{$s}_" . $column;
+                $data[$column] = $this->$field;
+            }
 
-            $data = [
-                'receive_formal' => $this->$receive_formal_field,
-                'receive_informal' => $this->$receive_informal_field
-            ];
+            foreach($this->placement_multiple_columns as $column)
+            {
+                $field = "s{$s}_" . $column;
 
-            if($student->accommodation){
-                $student->accommodation()->update($data);
+                
+                if(is_array($this->$field)){
+                    array_filter($this->$field);
+                    
+                    $data[$column] = implode($this->$field);
+                }
+            }
+
+            if($student->coursePlacement){
+                $student->coursePlacement()->update($data);
             }else{
                 $data['user_id'] = $user->id;
-                $student->accommodation()->create($data);
+                $student->coursePlacement()->create($data);
             }
         }
     }

@@ -10,4 +10,9 @@ class SchoolTerm extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

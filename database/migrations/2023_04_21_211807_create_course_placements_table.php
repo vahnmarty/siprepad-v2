@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('student_id');
-            $table->string('english_placement');
-            $table->string('math_placement');
-            $table->boolean('reserve_math_challenge');
+            $table->string('english_placement')->nullable();
+            $table->string('math_placement')->nullable();
+            $table->boolean('reserve_math_challenge')->nullable();
             $table->string('language1')->nullable();
             $table->string('language2')->nullable();
             $table->string('language3')->nullable();
