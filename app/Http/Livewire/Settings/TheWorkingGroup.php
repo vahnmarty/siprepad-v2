@@ -3,10 +3,11 @@
 namespace App\Http\Livewire\Settings;
 
 use Livewire\Component;
+use App\Models\Department;
 
 class TheWorkingGroup extends Component
 {
-    public $members = [];
+    public $departments = [];
     
     public function render()
     {
@@ -15,7 +16,7 @@ class TheWorkingGroup extends Component
 
     public function mount()
     {
-        $this->members = $this->getDirectories();
+        $this->departments = Department::get();
     }
 
     public function getDirectories()
