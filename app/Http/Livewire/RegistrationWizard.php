@@ -151,6 +151,8 @@ class RegistrationWizard extends Component implements HasForms
         $data = $this->form->getState();
 
         $this->saveCoursePlacement();
+
+        return redirect()->route('registration.complete');
     }
 
     

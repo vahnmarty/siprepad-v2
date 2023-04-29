@@ -25,4 +25,9 @@ class Student extends Model
     {
         return $this->hasOne(CoursePlacement::class);
     }
+
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
