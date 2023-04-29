@@ -18,7 +18,7 @@
                         class="font-bold text-red-700 underline">Log In</a></p>
             </div>
 
-            <div class="rounded-l-md lg:px-8 lg:py-32">
+            <div class="rounded-l-md lg:px-8 lg:py-16">
 
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
