@@ -85,4 +85,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CoursePlacement::class);
     }
+
+    public function getAvatar()
+    {
+        return "https://ui-avatars.com/api/?name=" . $this->name;
+    }
 }

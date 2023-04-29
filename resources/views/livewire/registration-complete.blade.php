@@ -107,7 +107,7 @@
 
                         <div class="grid gap-6 mt-4 lg:grid-cols-2">
                             <div class="p-4 bg-white border border-gray-300 rounded-md">
-                                <h4 class="font-bold">Cat Camp</h4>
+                                <h4 class="text-lg font-bold text-red-700">Cat Camp</h4>
                                 <div class="flex gap-3 mt-3">
                                     <x-heroicon-o-calendar class="flex-shrink w-5 h-5" />
                                     <p class="text-sm">Tuesday, March 21, 2023 at 10:am PT</p>
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <div class="p-4 bg-white border border-gray-300 rounded-md">
-                                <h4 class="font-bold">Rising 9th Grader Summer Classes</h4>
+                                <h4 class="text-lg font-bold text-red-700">Rising 9th Grader Summer Classes</h4>
                                 <div class="flex gap-3 mt-3">
                                     <x-heroicon-o-calendar class="flex-shrink w-5 h-5" />
                                     <p class="text-sm">Tuesday, March 21, 2023 at 10:am PT</p>
