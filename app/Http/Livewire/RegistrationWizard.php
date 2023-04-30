@@ -52,7 +52,7 @@ class RegistrationWizard extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.registration-wizard');
+        return view('livewire.registration-wizard')->layout('layouts.linear');
     }
 
     public function mount()
@@ -141,7 +141,7 @@ class RegistrationWizard extends Component implements HasForms
                         $this->saveCoursePlacement();
                     }),
             ])
-            ->startOnStep(8)
+            ->startOnStep($this->last_step)
             ->submitAction(new HtmlString('<button type="submit" class="btn-primary">Submit</button>'))
         ];
     }

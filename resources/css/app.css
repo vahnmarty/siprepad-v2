@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html,body{
+    font-family: 'Poppins', sans-serif;
+}
+
 .filament-forms-wizard-component ol li button{
     /* @apply block; */
 }
@@ -23,4 +27,8 @@
 
 .link{
     @apply font-bold text-blue-500 hover:text-blue-600;
+}
+
+.bg-app{
+    min-height: calc(100vh - 64px);
 }

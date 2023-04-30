@@ -1,5 +1,6 @@
 <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-<div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+<div  x-data="{ showMenu: false }" 
+    class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
     <div x-show="showMenu"
         x-cloak
         x-transition:enter="transition-opacity ease-linear duration-300"

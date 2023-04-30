@@ -29,11 +29,8 @@
 <body class="h-full font-sans antialiased">
 
     <div>
-        @include('includes.base.sidebar_mobile')
 
-        @include('includes.base.sidebar_desktop')
-
-        <div class="lg:pl-72">
+        <div>
             @include('includes.base.header')
 
             <main class="">

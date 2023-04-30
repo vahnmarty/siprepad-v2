@@ -1,5 +1,5 @@
 <div
-    class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
+    class="sticky top-0 z-40 flex items-center h-16 px-4 text-white border-b shadow-sm border-brand-red bg-brand-red shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
     <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
         <span class="sr-only">Open sidebar</span>
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -14,10 +14,10 @@
 
     <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
         <div class="self-center flex-1">
-            <code class="text-sm font-bold">SI Admission Portal v2.0.0</code>
+            <a href="{{ url('dashboard') }}" class="text-sm font-bold">Home</a>
         </div>
         <div class="flex items-center gap-x-4 lg:gap-x-6">
-            <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+            <button type="button" class="-m-2.5 p-2.5 text-gray-50 hover:text-gray-200">
                 <span class="sr-only">View notifications</span>
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" aria-hidden="true">
@@ -40,7 +40,7 @@
                         src="{{ Auth::user()->getAvatar() }}"
                         alt="">
                     <span class="hidden lg:flex lg:items-center">
-                        <span class="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                        <span class="ml-4 text-sm font-semibold leading-6 "
                             aria-hidden="true">{{ Auth::user()->name }}</span>
                         <svg class="w-5 h-5 ml-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
                             aria-hidden="true">

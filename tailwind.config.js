@@ -22,12 +22,14 @@ module.exports = {
                 success: colors.green,
                 warning: colors.yellow,
                 'brand-red': '#a71930',
+                'dark-red': '#5f0a18',
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'hero-pattern': "url('/public/img/hero.png')",
+                'hero-app': "url('/public/img/cross.jpg')"
             }
         },
     },
