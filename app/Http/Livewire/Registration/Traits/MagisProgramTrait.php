@@ -122,7 +122,7 @@ trait MagisProgramTrait{
                     'is_interested' => $this->$is_interested_field
                 ]);
             }else{
-                $magisProgram->items()->create([
+                $student->magisProgramItem()->create([
                     'student_id' => $student->id,
                     'is_interested' => $this->$is_interested_field
                 ]);
