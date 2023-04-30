@@ -37,6 +37,10 @@ class SchoolTermsTableSeeder extends Seeder
                 ]);
             }
         }
+
+        $term = SchoolTerm::first();
+        $term->active = true;
+        $term->save();
     }
 
     /**

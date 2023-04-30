@@ -11,7 +11,7 @@ class RegistrationComplete extends Component
 
     public function render()
     {
-        return view('livewire.registration-complete')->layout('layouts.blank');
+        return view('livewire.registration-complete')->layout('layouts.linear');
     }
 
     public function mount()
