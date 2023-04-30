@@ -7,6 +7,7 @@ use App\Enums\RaceType;
 use App\Models\Student;
 use App\Enums\ShirtSize;
 use App\Enums\EthnicType;
+use App\Enums\GenderType;
 use App\Enums\ReligionType;
 use Illuminate\Database\Seeder;
 use App\Enums\PerformingArtsType;
@@ -52,7 +53,7 @@ class StudentsTableSeeder extends Seeder
                 $student->middle_name = fake()->firstName();
                 $student->last_name = fake()->lastName();
                 $student->birthdate = fake()->dateTimeBetween($startDate = '-5 years', $endDate = 'now');
-                $student->gender = rand(0,1);
+                $student->gender = GenderType::getRandomValue();
                 $student->personal_email = fake()->freeEmail();
                 $student->mobile_phone = fake()->phoneNumber();
                 $student->religion = ReligionType::getRandomValue();

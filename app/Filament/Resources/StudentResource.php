@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use App\Models\Student;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Student;
+use App\Enums\GenderType;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\StudentResource\RelationManagers;
 
 class StudentResource extends Resource
 {
@@ -32,7 +33,13 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->rowIndex(),
+                Tables\Columns\TextColumn::make('user.name')->label("Account")->searchable(),
+                Tables\Columns\TextColumn::make('first_name')->searchable(),
+                Tables\Columns\TextColumn::make('last_name')->searchable(),
+                Tables\Columns\TextColumn::make('birthdate')->dateTime('Y-m-d'),
+                Tables\Columns\TextColumn::make('gender')
+                    ->formatStateUsing(fn (string $state) => GenderType::fromValue($state)->description),
             ])
             ->filters([
                 //
