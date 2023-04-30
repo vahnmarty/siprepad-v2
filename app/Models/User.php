@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->hasMany(Accommodation::class);
     }
 
+    public function magisProgram()
+    {
+        return $this->hasOne(MagisProgram::class);
+    }
+
     public function magisProgramItem()
     {
         return $this->hasOne(MagisProgramItem::class);
